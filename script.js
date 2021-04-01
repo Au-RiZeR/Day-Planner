@@ -1,7 +1,6 @@
 $(document).ready(function () {
     // set todays date
     var today = moment().format('dddd, Do of MMMM')
-    console.log(localStorage)
     document.getElementById("currentDay").innerText = today;
     // Check for saved data to be used once loaded
     onLoad()
@@ -26,10 +25,7 @@ $(document).ready(function () {
         var element = e.target;
         var hour = element.getAttribute("id")
         var text = document.getElementById(`${hour}text`).value
-        console.log(text)
-        console.log(hour)
         localStorage.setItem(hour, text)
-        console.log(localStorage)
     });
     // Clear storage and all day planned cells
     $("#clear").click(function (e) { 
