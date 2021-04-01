@@ -7,6 +7,6 @@ Select the textbox next to your desired hour and input your plans for that hour,
 ## Deployed App
 https://au-rizer.github.io/Day-Planner/
 ## Screen-capture
-||to be updated||
+<img width="873" alt="Screen Shot 2021-04-01 at 2 27 24 pm" src="https://user-images.githubusercontent.com/32904314/113252486-7e175300-92f6-11eb-8710-89d6775a8927.png">
 ## Aknowledgements and Author
 The Man, The Myth, The Mistake - Ricky Gobby.
