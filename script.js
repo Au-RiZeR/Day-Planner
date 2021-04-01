@@ -14,7 +14,7 @@ $(document).ready(function () {
     // Update coloured codes for past present and future hours
     x = setInterval(function() {
         var currentHour = moment().format('HH')
-        document.getElementById(`${currentHour}text`).style.backgroundColor = "green";
+        document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";
         for (let i = 9; i < moment().format('HH'); i++) {
             document.getElementById(`${i}text`).style.backgroundColor = "grey";
         }
