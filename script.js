@@ -5,7 +5,7 @@ $(document).ready(function () {
     var startOfDay = localStorage.getItem('beginHour');
     var endOfDay = localStorage.getItem('endHour');
     var container = document.getElementById('day');
-    if (startOfDay == null || endOfDay == null) {
+    if (!startOfDay || !endOfDay) {
         startOfDay = 8;
         endOfDay = 17;
     }
@@ -15,8 +15,6 @@ $(document).ready(function () {
         endOfDay = document.getElementById("end").value;
         localStorage.setItem('beginHour', startOfDay);
         localStorage.setItem('endHour', endOfDay);
-        console.log(endOfDay);
-        console.log(startOfDay);
         setDay();
     });
     onLoad();
@@ -74,6 +72,14 @@ $(document).ready(function () {
                 document.getElementById(`${i}text`).innerText = (localStorage.getItem(i));
             }
         }
+            // Save button to save hour inputs individually
+    $(".save").click(function (e) {
+        e.preventDefault();
+        var element = e.target;
+        var hour = element.getAttribute("id");
+        var text = document.getElementById(`${hour}text`).value;
+        localStorage.setItem(hour, text);
+    });
     }
     // Update coloured codes for past present and future hours
     x = setInterval(function () {
@@ -88,15 +94,6 @@ $(document).ready(function () {
             }
         }
     }, 100);
-    // Save button to save hour inputs individually
-    $(".save").click(function (e) {
-        e.preventDefault();
-        var element = e.target;
-        var hour = element.getAttribute("id");
-        var text = document.getElementById(`${hour}text`).value;
-        localStorage.setItem(hour, text);
-        console.log(localStorage.getItem(hour));
-    });
     // Clear storage and all day planned cells
     $("#clear").click(function (e) {
         e.preventDefault();
