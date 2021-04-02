@@ -5,6 +5,36 @@ $(document).ready(function () {
     // Check for saved data to be used once loaded
     onLoad()
     function onLoad() {
+        // Create each of the timeblocks
+        for (let i = 9; i <= 17; i++) {
+            var container = document.getElementById('day')
+            var div = document.createElement("div")
+            var span = document.createElement('span')
+            var textArea = document.createElement('textarea')
+            var button = document.createElement('button')
+            var img = document.createElement('img')
+            var time = i
+            if (time < 12) {
+                time = `${time}am`
+            }
+            if (time == 12) {
+                time = `${time}pm`
+            } if (time > 12) {
+                time = `${time -12}pm`
+            }
+            span.textContent = time
+            textArea.id = `${i}text`
+            button.className = 'save'
+            img.src = './save.svg'
+            img.id = i
+            button.id = i
+            button.appendChild(img)
+            div.className = "timeBlock";
+            div.appendChild(span)
+            div.appendChild(textArea)
+            div.appendChild(button)
+            container.appendChild(div)
+        }
         for (let i = 8; i < 18; i++) {
             if (localStorage.getItem(i) != null) {
                 document.getElementById(`${i}text`).innerText = (localStorage.getItem(i))
