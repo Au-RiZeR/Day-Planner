@@ -1,83 +1,83 @@
 $(document).ready(function () {
     // set todays date
-    var today = moment().format('dddd, Do of MMMM')
+    var today = moment().format('dddd, Do of MMMM');
     document.getElementById("currentDay").innerText = today;
-    var startOfDay = localStorage.getItem('beginHour')
-    var endOfDay = localStorage.getItem('endHour')
-    var container = document.getElementById('day')
+    var startOfDay = localStorage.getItem('beginHour');
+    var endOfDay = localStorage.getItem('endHour');
+    var container = document.getElementById('day');
     if (startOfDay == null || endOfDay == null) {
-        startOfDay = 8
-        endOfDay = 17
+        startOfDay = 8;
+        endOfDay = 17;
     }
     $("select").change(function (e) {
         e.preventDefault();
-        startOfDay = document.getElementById("begin").value
-        endOfDay = document.getElementById("end").value
-        localStorage.setItem('beginHour', startOfDay)
-        localStorage.setItem('endHour', endOfDay)
-        console.log(endOfDay)
-        console.log(startOfDay)
-        setDay()
+        startOfDay = document.getElementById("begin").value;
+        endOfDay = document.getElementById("end").value;
+        localStorage.setItem('beginHour', startOfDay);
+        localStorage.setItem('endHour', endOfDay);
+        console.log(endOfDay);
+        console.log(startOfDay);
+        setDay();
     });
-    onLoad()
+    onLoad();
     function onLoad() {
         for (let i = 1; i <= 24; i++) {
-            var begin = document.getElementById('begin')
-            var end = document.getElementById('end')
-            var option1 = document.createElement('option')
-            var option2 = document.createElement('option')
-            option1.value = i
-            option1.textContent = i
-            option2.value = i
-            option2.textContent = i
+            var begin = document.getElementById('begin');
+            var end = document.getElementById('end');
+            var option1 = document.createElement('option');
+            var option2 = document.createElement('option');
+            option1.value = i;
+            option1.textContent = i;
+            option2.value = i;
+            option2.textContent = i;
             begin.appendChild(option1);
             end.appendChild(option2);
         }
         $('#begin').val(startOfDay);
         $('#end').val(endOfDay);
-        setDay()
+        setDay();
     }
     function setDay() {
         container.innerHTML = '';
         for (let i = Number(startOfDay); i <= Number(endOfDay); i++) {
-            var div = document.createElement("div")
-            var span = document.createElement('span')
-            var textArea = document.createElement('textarea')
-            var button = document.createElement('button')
-            var img = document.createElement('img')
-            var time = i
+            var div = document.createElement("div");
+            var span = document.createElement('span');
+            var textArea = document.createElement('textarea');
+            var button = document.createElement('button');
+            var img = document.createElement('img');
+            var time = i;
             if (time < 12) {
-                time = `${time}am`
+                time = `${time}am`;
             }
             if (time == 12) {
-                time = `${time}pm`
+                time = `${time}pm`;
             } if (time > 12 && time != 24) {
-                time = `${time - 12}pm`
+                time = `${time - 12}pm`;
             } if (time == 24) {
-                time = `${time}am`
+                time = `${time}am`;
             }
-            span.textContent = time
-            textArea.id = `${i}text`
-            button.className = 'save'
-            img.src = './save.svg'
-            img.id = i
-            button.id = Number(i)
-            button.appendChild(img)
+            span.textContent = time;
+            textArea.id = `${i}text`;
+            button.className = 'save';
+            img.src = './save.svg';
+            img.id = i;
+            button.id = Number(i);
+            button.appendChild(img);
             div.className = "timeBlock";
-            div.appendChild(span)
-            div.appendChild(textArea)
-            div.appendChild(button)
-            container.appendChild(div)
+            div.appendChild(span);
+            div.appendChild(textArea);
+            div.appendChild(button);
+            container.appendChild(div);
         }
         for (let i = Number(startOfDay); i < Number(endOfDay); i++) {
             if (localStorage.getItem(i) != null) {
-                document.getElementById(`${i}text`).innerText = (localStorage.getItem(i))
+                document.getElementById(`${i}text`).innerText = (localStorage.getItem(i));
             }
         }
     }
     // Update coloured codes for past present and future hours
     x = setInterval(function () {
-        var currentHour = moment().format('H')
+        var currentHour = moment().format('H');
         if (document.getElementById(`${currentHour}text`) != null) {
             document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";  
         }
@@ -92,17 +92,17 @@ $(document).ready(function () {
     $(".save").click(function (e) {
         e.preventDefault();
         var element = e.target;
-        var hour = element.getAttribute("id")
-        var text = document.getElementById(`${hour}text`).value
-        localStorage.setItem(hour, text)
-        console.log(localStorage.getItem(hour))
+        var hour = element.getAttribute("id");
+        var text = document.getElementById(`${hour}text`).value;
+        localStorage.setItem(hour, text);
+        console.log(localStorage.getItem(hour));
     });
     // Clear storage and all day planned cells
     $("#clear").click(function (e) {
         e.preventDefault();
         for (let i = 1; i < 24; i++) {
             let item = document.getElementById(`${i}text`);
-            localStorage.removeItem(i)
+            localStorage.removeItem(i);
             if (item != null) {
                 item.value = "";
             }
