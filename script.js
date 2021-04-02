@@ -2,12 +2,44 @@ $(document).ready(function () {
     // set todays date
     var today = moment().format('dddd, Do of MMMM')
     document.getElementById("currentDay").innerText = today;
-    // Check for saved data to be used once loaded
+    var startOfDay = localStorage.getItem('beginHour')
+    var endOfDay = localStorage.getItem('endHour')
+    var container = document.getElementById('day')
+    if (startOfDay == null || endOfDay == null) {
+        startOfDay = 8
+        endOfDay = 17
+    }
+    $("select").change(function (e) {
+        e.preventDefault();
+        startOfDay = document.getElementById("begin").value
+        endOfDay = document.getElementById("end").value
+        localStorage.setItem('beginHour', startOfDay)
+        localStorage.setItem('endHour', endOfDay)
+        console.log(endOfDay)
+        console.log(startOfDay)
+        setDay()
+    });
     onLoad()
     function onLoad() {
-        // Create each of the timeblocks
-        for (let i = 9; i <= 17; i++) {
-            var container = document.getElementById('day')
+        for (let i = 1; i <= 24; i++) {
+            var begin = document.getElementById('begin')
+            var end = document.getElementById('end')
+            var option1 = document.createElement('option')
+            var option2 = document.createElement('option')
+            option1.value = i
+            option1.textContent = i
+            option2.value = i
+            option2.textContent = i
+            begin.appendChild(option1);
+            end.appendChild(option2);
+        }
+        $('#begin').val(startOfDay);
+        $('#end').val(endOfDay);
+        setDay()
+    }
+    function setDay() {
+        container.innerHTML = '';
+        for (let i = Number(startOfDay); i <= Number(endOfDay); i++) {
             var div = document.createElement("div")
             var span = document.createElement('span')
             var textArea = document.createElement('textarea')
@@ -19,8 +51,10 @@ $(document).ready(function () {
             }
             if (time == 12) {
                 time = `${time}pm`
-            } if (time > 12) {
-                time = `${time -12}pm`
+            } if (time > 12 && time != 24) {
+                time = `${time - 12}pm`
+            } if (time == 24) {
+                time = `${time}am`
             }
             span.textContent = time
             textArea.id = `${i}text`
@@ -35,22 +69,25 @@ $(document).ready(function () {
             div.appendChild(button)
             container.appendChild(div)
         }
-        for (let i = 8; i < 18; i++) {
+        for (let i = Number(startOfDay); i < Number(endOfDay); i++) {
             if (localStorage.getItem(i) != null) {
                 document.getElementById(`${i}text`).innerText = (localStorage.getItem(i))
             }
         }
     }
     // Update coloured codes for past present and future hours
-    x = setInterval(function() {
+    x = setInterval(function () {
         var currentHour = moment().format('H')
         document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";
-        for (let i = 9; i < moment().format('H'); i++) {
-            document.getElementById(`${i}text`).style.backgroundColor = "grey";
+        for (let i = Number(startOfDay); i < currentHour; i++) {
+            let item = document.getElementById(`${i}text`);
+            if (item != null) {
+                item.style.backgroundColor = "grey";
+            }
         }
     }, 100);
     // Save button to save hour inputs individually
-    $(".save").click(function (e) { 
+    $(".save").click(function (e) {
         e.preventDefault();
         var element = e.target;
         var hour = element.getAttribute("id")
@@ -58,11 +95,14 @@ $(document).ready(function () {
         localStorage.setItem(hour, text)
     });
     // Clear storage and all day planned cells
-    $("#clear").click(function (e) { 
+    $("#clear").click(function (e) {
         e.preventDefault();
-        localStorage.clear();
-        for (let i = 9; i < 18; i++) {
-                document.getElementById(`${i}text`).value = "";
+        for (let i = 1; i < 24; i++) {
+            let item = document.getElementById(`${i}text`);
+            localStorage.removeItem(i)
+            if (item != null) {
+                item.value = "";
+            }
         }
     });
 });
