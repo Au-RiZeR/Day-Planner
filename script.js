@@ -61,7 +61,7 @@ $(document).ready(function () {
             button.className = 'save'
             img.src = './save.svg'
             img.id = i
-            button.id = i
+            button.id = Number(i)
             button.appendChild(img)
             div.className = "timeBlock";
             div.appendChild(span)
@@ -95,6 +95,7 @@ $(document).ready(function () {
         var hour = element.getAttribute("id")
         var text = document.getElementById(`${hour}text`).value
         localStorage.setItem(hour, text)
+        console.log(localStorage.getItem(hour))
     });
     // Clear storage and all day planned cells
     $("#clear").click(function (e) {
