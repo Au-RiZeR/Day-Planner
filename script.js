@@ -78,7 +78,9 @@ $(document).ready(function () {
     // Update coloured codes for past present and future hours
     x = setInterval(function () {
         var currentHour = moment().format('H')
-        document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";
+        if (document.getElementById(`${currentHour}text`) != null) {
+            document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";  
+        }
         for (let i = Number(startOfDay); i < currentHour; i++) {
             let item = document.getElementById(`${i}text`);
             if (item != null) {
