@@ -9,6 +9,7 @@ $(document).ready(function () {
         startOfDay = 8;
         endOfDay = 17;
     }
+    // Dropdowns to choose hours of day
     $("select").change(function (e) {
         e.preventDefault();
         startOfDay = document.getElementById("begin").value;
@@ -17,6 +18,7 @@ $(document).ready(function () {
         localStorage.setItem('endHour', endOfDay);
         setDay();
     });
+    // to run upon loading the page
     onLoad();
     function onLoad() {
         for (let i = 1; i <= 24; i++) {
@@ -35,6 +37,7 @@ $(document).ready(function () {
         $('#end').val(endOfDay);
         setDay();
     }
+    // Function to be run when updating hours of day
     function setDay() {
         container.innerHTML = '';
         for (let i = Number(startOfDay); i <= Number(endOfDay); i++) {
@@ -72,20 +75,20 @@ $(document).ready(function () {
                 document.getElementById(`${i}text`).innerText = (localStorage.getItem(i));
             }
         }
-            // Save button to save hour inputs individually
-    $(".save").click(function (e) {
-        e.preventDefault();
-        var element = e.target;
-        var hour = element.getAttribute("id");
-        var text = document.getElementById(`${hour}text`).value;
-        localStorage.setItem(hour, text);
-    });
+        // Save button to save hour inputs individually
+        $(".save").click(function (e) {
+            e.preventDefault();
+            var element = e.target;
+            var hour = element.getAttribute("id");
+            var text = document.getElementById(`${hour}text`).value;
+            localStorage.setItem(hour, text);
+        });
     }
     // Update coloured codes for past present and future hours
     x = setInterval(function () {
         var currentHour = moment().format('H');
         if (document.getElementById(`${currentHour}text`) != null) {
-            document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";  
+            document.getElementById(`${currentHour}text`).style.backgroundColor = "lightpink";
         }
         for (let i = Number(startOfDay); i < currentHour; i++) {
             let item = document.getElementById(`${i}text`);
